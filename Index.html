@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takoyaki Genz | Rasa Autentik Moden</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           CSS STYLES
+           ========================================================================== */
+        :root {
+            --primary: #9e2a2b; /* Merah Jepun */
+            --secondary: #3d2314; /* Coklat Gelap */
+            --accent: #e07a5f; /* Coklat Cerah / Terracotta */
+            --bg-light: #fffcf9;
+            --text-light: #2b2d42;
+            --bg-dark: #1a120b;
+            --text-dark: #f5ebe0;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Noto Sans JP', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        /* Dark Mode Override */
+        body.dark {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 60px 0;
+        }
+
+        /* Sticky Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--secondary);
+            padding: 15px 5px;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #dark-mode-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .hamburger {
+            display: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Slider / Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        .slider {
+            display: flex;
+            width: 200%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            width: 50%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--accent);
+        }
+
+        .prev-slide, .next-slide {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .prev-slide { left: 10px; }
+        .next-slide { right: 10px; }
+
+        /* Tentang Kami */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-img img {
+            width: 100%;
+            border-radius: 10px;
+            border-bottom: 8px solid var(--primary);
+        }
+
+        /* Menu Section */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 10px auto 0;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        body.dark .menu-card {
+            background: #2b2118;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .price {
+            color: var(--primary);
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* Promosi */
+        .promo-section {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .btn-alt {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        /* Testimoni & Galeri */
+        .testi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .testi-card {
+            background: rgba(158, 42, 43, 0.05);
+            padding: 30px;
+            border-left: 5px solid var(--primary);
+            border-radius: 5px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* FAQ Accordion */
+        .faq-item {
+            background: rgba(61, 35, 20, 0.05);
+            margin-bottom: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        body.dark .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-question {
+            padding: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(0,0,0,0.02);
+        }
+
+        .faq-answer p {
+            padding: 20px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        /* Hubungi & Tempahan */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .booking-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .booking-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .booking-form input, .booking-form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: transparent;
+            color: inherit;
+        }
+
+        /* Footer & Sosmed */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .whatsapp { background: #25D366; }
+        .instagram { background: #E1306C; }
+        .tiktok { background: #000000; }
+
+        .social-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Animasi Scroll Hook */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Popup Promosi */
+        .popup-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .popup-box {
+            background: var(--bg-light);
+            color: var(--text-light);
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+        }
+
+        body.dark .popup-box {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            border: 1px solid var(--primary);
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Responsif Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                flex-direction: column;
+                background: var(--secondary);
+                width: 100%;
+                height: calc(100vh - 60px);
+                text-align: center;
+                transition: 0.3s;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 20px 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .about-grid, .contact-grid, .testi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">Takoyaki <span>Genz</span></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#tentang">Tentang Kami</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#promosi">Promosi</a></li>
+                <li><a href="#testimoni">Testimoni</a></li>
+                <li><a href="#galeri">Galeri</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#hubungi">Hubungi</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="dark-mode-toggle"><i class="fas fa-moon"></i></button>
+                <div class="hamburger"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <div class="slider">
+            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1626597519124-783cae74aa6c?auto=format&fit=crop&w=1200&q=80');">
+                <div class="hero-content">
+                    <h1 class="reveal">Takoyaki Rangup & Premium</h1>
+                    <p class="reveal">Nikmati bebola sotong asli berkonsepkan jalanan Tokyo moden.</p>
+                    <a href="#menu" class="btn reveal">Lihat Menu</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1590157053151-54c344df3133?auto=format&fit=crop&w=1200&q=80');">
+                <div class="hero-content">
+                    <h1>Sos Rahsia Turun-Temurun</h1>
+                    <p>Kombinasi sos manis, mayonis premium, dan katsuobushi melimpah!</p>
+                    <a href="#promosi" class="btn">Dapatkan Promosi</a>
+                </div>
+            </div>
+        </div>
+        <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+        <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+    </section>
+
+    <section id="tentang" class="about-section reveal">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=600&q=80" alt="Kedai Takoyaki">
+                </div>
+                <div class="about-text">
+                    <h2>Tentang Takoyaki Genz</h2>
+                    <p>Dilahirkan daripada minat mendalam terhadap kulinari Jepun, Takoyaki Genz membawakan resepi jalanan Osaka yang telah diubahsuai mengikut selera moden tempatan. Kami menggunakan bahan-bahan premium dan halal bagi memastikan setiap gigitan memberikan kepuasan maksimum.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="menu-section reveal">
+        <div class="container">
+            <h2 class="section-title">Menu Utama</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80" alt="Takoyaki Octopus">
+                    <div class="menu-info">
+                        <h3>Original Tako (Octopus)</h3>
+                        <p class="price">RM 10.00 / 6 Biji</p>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&q=80" alt="Takoyaki Cheesy">
+                    <div class="menu-info">
+                        <h3>Cheesy Blast</h3>
+                        <p class="price">RM 12.00 / 6 Biji</p>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&q=80" alt="Takoyaki Spicy">
+                    <div class="menu-info">
+                        <h3>Spicy Genz Flame</h3>
+                        <p class="price">RM 11.00 / 6 Biji</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="promosi" class="promo-section reveal">
+        <div class="container">
+            <div class="promo-box">
+                <h2>Promosi Set Combo Genz!</h2>
+                <p>Beli 2 Set Original Free 1 Set Cheesy. Sah sehingga hujung bulan ini sahaja!</p>
+                <a href="#tempahan" class="btn-alt">Tebus Sekarang</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimoni" class="testi-section reveal">
+        <div class="container">
+            <h2 class="section-title">Apa Kata Pelanggan</h2>
+            <div class="testi-grid">
+                <div class="testi-card">
+                    <p>"Takoyaki paling lembut kat dalam, rangup kat luar. Sotong dia besar tak kedekut!"</p>
+                    <h4>- Amirul, Kuala Lumpur</h4>
+                </div>
+                <div class="testi-card">
+                    <p>"Sos premium dia memang layan, tak muak langsung. Dah repeat 3 kali minggu ni."</p>
+                    <h4>- Sarah, Shah Alam</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeri" class="gallery-section reveal">
+        <div class="container">
+            <h2 class="section-title">Galeri Genz</h2>
+            <div class="gallery-grid">
+                <img src="https://images.unsplash.com/photo-1626597519124-783cae74aa6c?auto=format&fit=crop&w=300&q=80" alt="Galeri 1">
+                <img src="https://images.unsplash.com/photo-1590157053151-54c344df3133?auto=format&fit=crop&w=300&q=80" alt="Galeri 2">
+                <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=300&q=80" alt="Galeri 3">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=300&q=80" alt="Galeri 4">
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section reveal">
+        <div class="container">
+            <h2 class="section-title">Soalan Lazim (FAQ)</h2>
+            <div class="faq-item">
+                <div class="faq-question">Adakah Takoyaki Genz halal? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><p>Ya, kami menggunakan 100% bahan-bahan premium yang diiktiraf halal.</p></div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Bolehkah saya buat tempahan untuk majlis keraian? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><p>Boleh! Sila isi borang tempahan atau WhatsApp kami sekurang-kurangnya 3 hari awal.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hubungi" class="contact-section reveal">
+        <div id="tempahan" class="container">
+            <h2 class="section-title">Borang Tempahan & Hubungi Kami</h2>
+            <div class="contact-grid">
+                <form id="booking-form" class="booking-form">
+                    <div class="form-group">
+                        <label>Nama Anda</label>
+                        <input type="text" id="name" required placeholder="Masukkan nama penuh">
+                    </div>
+                    <div class="form-group">
+                        <label>Pilihan Menu</label>
+                        <select id="menu-select">
+                            <option value="Origina
