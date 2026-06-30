@@ -34,6 +34,7 @@
             background-color: var(--bg-light);
             color: var(--text-light);
             transition: var(--transition);
+            overflow-x: hidden; /* Elakkan overflow mendatar */
         }
 
         /* Dark Mode Override */
@@ -56,7 +57,7 @@
             left: 0;
             width: 100%;
             background-color: var(--secondary);
-            padding: 15px 5px;
+            padding: 15px 0;
             z-index: 1000;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: var(--transition);
@@ -124,7 +125,8 @@
         /* Slider / Hero Section */
         .hero-section {
             position: relative;
-            height: 100vh;
+            height: 80vh; /* Tukar ke 80vh supaya lebih mesra mobile */
+            min-height: 500px;
             overflow: hidden;
             margin-top: 60px;
         }
@@ -149,10 +151,21 @@
             padding: 0 20px;
         }
 
+        .hero-content {
+            max-width: 800px;
+            width: 100%;
+        }
+
         .hero-content h1 {
             font-size: 3rem;
             margin-bottom: 20px;
             color: #fff;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
 
         .btn {
@@ -183,6 +196,7 @@
             padding: 15px;
             cursor: pointer;
             z-index: 10;
+            border-radius: 3px;
         }
 
         .prev-slide { left: 10px; }
@@ -198,8 +212,19 @@
 
         .about-img img {
             width: 100%;
+            height: auto;
             border-radius: 10px;
             border-bottom: 8px solid var(--primary);
+            object-fit: cover;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            line-height: 1.6;
         }
 
         /* Menu Section */
@@ -243,7 +268,7 @@
 
         .menu-card img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
         }
 
@@ -265,6 +290,11 @@
             text-align: center;
         }
 
+        .promo-box h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
         .btn-alt {
             display: inline-block;
             background-color: var(--secondary);
@@ -274,6 +304,11 @@
             border-radius: 5px;
             font-weight: 600;
             margin-top: 20px;
+            transition: var(--transition);
+        }
+
+        .btn-alt:hover {
+            background-color: var(--accent);
         }
 
         /* Testimoni & Galeri */
@@ -290,17 +325,26 @@
             border-radius: 5px;
         }
 
+        body.dark .testi-card {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 15px;
         }
 
         .gallery-grid img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
             border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.02);
         }
 
         /* FAQ Accordion */
@@ -327,16 +371,17 @@
         .faq-answer {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease-out;
             background: rgba(0,0,0,0.02);
         }
 
         .faq-answer p {
             padding: 20px;
+            line-height: 1.6;
         }
 
         .faq-item.active .faq-answer {
-            max-height: 200px;
+            max-height: 300px; /* Ditambah nilai max-height untuk teks panjang */
         }
 
         /* Hubungi & Tempahan */
@@ -365,11 +410,23 @@
             color: inherit;
         }
 
+        body.dark .booking-form input, body.dark .booking-form select {
+            border-color: #555;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+        .contact-info h3:first-child {
+            margin-top: 0;
+        }
+
         /* Footer & Sosmed */
         footer {
             background: var(--secondary);
             color: white;
-            padding: 30px 0;
+            padding: 40px 0;
             text-align: center;
         }
 
@@ -430,15 +487,16 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
+            padding: 20px;
         }
 
         .popup-box {
             background: var(--bg-light);
             color: var(--text-light);
-            padding: 40px;
+            padding: 40px 20px;
             border-radius: 10px;
             max-width: 500px;
-            width: 90%;
+            width: 100%;
             position: relative;
             text-align: center;
         }
@@ -451,14 +509,36 @@
 
         .close-popup {
             position: absolute;
-            top: 15px;
+            top: 10px;
             right: 20px;
             font-size: 2rem;
             cursor: pointer;
         }
 
-        /* Responsif Mobile */
+        /* ==========================================================================
+           REKA BENTUK RESPONSIf (MEDIA QUERIES)
+           ========================================================================== */
+        
+        /* Untuk Tablet & Skrin Sederhana (Maksimum 992px) */
+        @media (max-width: 992px) {
+            .contact-grid {
+                grid-template-columns: 1fr; /* Borang dan info tersusun menegak */
+                gap: 30px;
+            }
+            .about-grid {
+                gap: 30px;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Untuk Telefon Pintar (Maksimum 768px) */
         @media (max-width: 768px) {
+            .container {
+                padding: 40px 0;
+            }
+
             .nav-links {
                 position: fixed;
                 top: 60px;
@@ -468,7 +548,8 @@
                 width: 100%;
                 height: calc(100vh - 60px);
                 text-align: center;
-                transition: 0.3s;
+                transition: 0.4s ease-in-out;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
             }
 
             .nav-links.active {
@@ -476,19 +557,58 @@
             }
 
             .nav-links li {
-                margin: 20px 0;
+                margin: 25px 0;
+            }
+
+            .nav-links li a {
+                font-size: 1.2rem;
+                display: block;
             }
 
             .hamburger {
                 display: block;
             }
 
-            .about-grid, .contact-grid, .testi-grid {
-                grid-template-columns: 1fr;
+            .about-grid, .testi-grid {
+                grid-template-columns: 1fr; /* Tukar susunan ke 1 kolum pada peranti mobile */
+            }
+
+            .about-img {
+                order: -1; /* Gambar akan sentiasa duduk di atas teks pada mobile */
+            }
+
+            .hero-section {
+                height: 70vh; /* Sesuaikan saiz hero mengikut skrin mobile */
             }
 
             .hero-content h1 {
                 font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+
+            .prev-slide, .next-slide {
+                padding: 10px; /* Butang slide dikecilkan sikit di mobile */
+            }
+        }
+
+        /* Untuk Telefon Kecil (Maksimum 480px) */
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.7rem;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .popup-box {
+                padding: 30px 15px;
             }
         }
     </style>
@@ -509,15 +629,15 @@
                 <li><a href="#hubungi">Hubungi</a></li>
             </ul>
             <div class="nav-actions">
-                <button id="dark-mode-toggle"><i class="fas fa-moon"></i></button>
-                <div class="hamburger"><i class="fas fa-bars"></i></div>
+                <button id="dark-mode-toggle" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+                <div class="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></div>
             </div>
         </div>
     </nav>
 
     <section id="home" class="hero-section">
         <div class="slider">
-            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1626597519124-783cae74aa6c?auto=format&fit=crop&w=1200&q=80');">
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1626597519124-783cae74aa6c?auto=format&fit=crop&w=1200&q=80');">
                 <div class="hero-content">
                     <h1 class="reveal">Takoyaki Rangup & Premium</h1>
                     <p class="reveal">Nikmati bebola sotong asli berkonsepkan jalanan Tokyo moden.</p>
@@ -532,8 +652,8 @@
                 </div>
             </div>
         </div>
-        <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
-        <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+        <button class="prev-slide" aria-label="Previous Slide"><i class="fas fa-chevron-left"></i></button>
+        <button class="next-slide" aria-label="Next Slide"><i class="fas fa-chevron-right"></i></button>
     </section>
 
     <section id="tentang" class="about-section reveal">
@@ -637,10 +757,182 @@
             <div class="contact-grid">
                 <form id="booking-form" class="booking-form">
                     <div class="form-group">
-                        <label>Nama Anda</label>
+                        <label for="name">Nama Anda</label>
                         <input type="text" id="name" required placeholder="Masukkan nama penuh">
                     </div>
                     <div class="form-group">
-                        <label>Pilihan Menu</label>
+                        <label for="menu-select">Pilihan Menu</label>
                         <select id="menu-select">
-                            <option value="Origina
+                            <option value="Original Tako">Original Tako</option>
+                            <option value="Cheesy Blast">Cheesy Blast</option>
+                            <option value="Spicy Genz Flame">Spicy Genz Flame</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Bilangan Set</label>
+                        <input type="number" id="quantity" min="1" value="1">
+                    </div>
+                    <button type="submit" class="btn">Hantar Tempahan via WhatsApp</button>
+                </form>
+                <div class="contact-info">
+                    <h3>Waktu Operasi</h3>
+                    <p>Setiap Hari: 12.00 Tengah Hari - 10.00 Malam</p>
+                    <h3>Lokasi</h3>
+                    <p>Genz Street Food Hub, Lot 23, Kuala Lumpur.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2026 Takoyaki Genz. Hak Cipta Terpelihara.</p>
+            <div class="social-icons">
+                <a href="https://wa.me/60146200721" target="_blank" class="social-btn whatsapp" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com" target="_blank" class="social-btn instagram" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank" class="social-btn tiktok" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="promo-popup" class="popup-wrapper">
+        <div class="popup-box">
+            <span class="close-popup">&times;</span>
+            <h2>Konichiwa! 🍣</h2>
+            <p>Dapatkan diskaun 10% untuk pembelian pertama anda hari ini!</p>
+            <a href="#menu" class="btn close-btn-action">Lihat Menu Sekarang</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // 1. Responsive Menu (Hamburger)
+            const hamburger = document.querySelector(".hamburger");
+            const navLinks = document.querySelector(".nav-links");
+
+            hamburger.addEventListener("click", () => {
+                navLinks.classList.toggle("active");
+            });
+
+            document.querySelectorAll(".nav-links a").forEach(link => {
+                link.addEventListener("click", () => {
+                    navLinks.classList.remove("active");
+                });
+            });
+
+            // 2. Slider Gambar Hero (Dibaiki formula transform bagi sokongan responsive)
+            const slider = document.querySelector(".slider");
+            const slides = document.querySelectorAll(".slide");
+            const prevBtn = document.querySelector(".prev-slide");
+            const nextBtn = document.querySelector(".next-slide");
+            let slideIndex = 0;
+
+            function showSlide(index) {
+                if (index >= slides.length) slideIndex = 0;
+                if (index < 0) slideIndex = slides.length - 1;
+                slider.style.transform = `translateX(-${slideIndex * 50}%)`;
+            }
+
+            nextBtn.addEventListener("click", () => {
+                slideIndex++;
+                showSlide(slideIndex);
+            });
+
+            prevBtn.addEventListener("click", () => {
+                slideIndex--;
+                showSlide(slideIndex);
+            });
+
+            setInterval(() => {
+                slideIndex++;
+                showSlide(slideIndex);
+            }, 5000);
+
+            // 3. Dark Mode Toggle
+            const darkModeToggle = document.getElementById("dark-mode-toggle");
+            const body = document.body;
+
+            darkModeToggle.addEventListener("click", () => {
+                body.classList.toggle("dark");
+                const isDark = body.classList.contains("dark");
+                darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            });
+
+            // 4. Animasi Scroll (Reveal on Scroll)
+            const revealElements = document.querySelectorAll(".reveal");
+
+            function checkReveal() {
+                const triggerBottom = window.innerHeight * 0.85;
+                revealElements.forEach(el => {
+                    const elTop = el.getBoundingClientRect().top;
+                    if (elTop < triggerBottom) {
+                        el.classList.add("active");
+                    }
+                });
+            }
+
+            window.addEventListener("scroll", checkReveal);
+            checkReveal();
+
+            // 5. FAQ Accordion
+            const faqItems = document.querySelectorAll(".faq-item");
+
+            faqItems.forEach(item => {
+                const question = item.querySelector(".faq-question");
+                question.addEventListener("click", () => {
+                    // Tutup item lain jika dibuka (opsional, untuk kekemasan)
+                    faqItems.forEach(i => {
+                        if(i !== item) i.classList.remove("active");
+                    });
+                    item.classList.toggle("active");
+                });
+            });
+
+            // 6. Popup Promosi (Muncul selepas 3 saat)
+            const popup = document.getElementById("promo-popup");
+            const closePopup = document.querySelector(".close-popup");
+            const closeBtnAction = document.querySelector(".close-btn-action");
+
+            setTimeout(() => {
+                popup.style.display = "flex";
+            }, 3000);
+
+            closePopup.addEventListener("click", () => {
+                popup.style.display = "none";
+            });
+
+            closeBtnAction.addEventListener("click", () => {
+                popup.style.display = "none";
+            });
+
+            window.addEventListener("click", (e) => {
+                if (e.target === popup) {
+                    popup.style.display = "none";
+                }
+            });
+
+            // 7. Borang Tempahan terus ke WhatsApp
+            const bookingForm = document.getElementById("booking-form");
+
+            bookingForm.addEventListener("submit", function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById("name").value;
+                const menu = document.getElementById("menu-select").value;
+                const quantity = document.getElementById("quantity").value;
+                
+                const phoneNumber = "60146200721"; // Ditukar secara automatik berdasarkan pautan footer anda
+                
+                const text = `Hai Takoyaki Genz! Saya nak buat tempahan:%0A%0A` +
+                             `Nama: ${encodeURIComponent(name)}%0A` +
+                             `Menu: ${encodeURIComponent(menu)}%0A` +
+                             `Kuantiti: ${encodeURIComponent(quantity)} Set`;
+                             
+                window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
+            });
+
+        });
+    </script>
+</body>
+</html>
